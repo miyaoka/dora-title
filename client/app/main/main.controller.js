@@ -3,7 +3,7 @@
 angular.module('doraApp')
   .controller('MainCtrl', function ($scope, $state, ngAudio) {
 
-    var dora = $('#dora');
+    var titleImg = $('#title-img');
     // string / image
     var maxStringRatio = .3;
     var msgWidthRatio = .8;
@@ -18,8 +18,8 @@ angular.module('doraApp')
     };
 
     $scope.resize = function(){
-      var dw = dora[0].clientWidth;
-      var dh = dora[0].clientHeight;
+      var dw = titleImg[0].clientWidth;
+      var dh = titleImg[0].clientHeight;
 
       var fontSize;
       if($scope.msg.length < 1){
@@ -35,21 +35,20 @@ angular.module('doraApp')
       }
 
       $scope.style.fontSize = fontSize + 'px';
-      console.log(dora);
       $scope.style.top = dh * msgHeightRatio - fontSize * .5 + 'px';
       $scope.$apply();
     };
 
     $scope.$watch(function(){
-      return $('#msg')[0].clientWidth;
+      return $('#title-msg')[0].clientWidth;
     }, function(){
-      var msgWidth = $('#msg')[0].clientWidth;
+      var msgWidth = $('#title-msg')[0].clientWidth;
       $scope.style.marginLeft = msgWidth * -.5 + 'px';
     });
 
     $(window).resize( $scope.resize );
 
-    dora.load( function(){
+    titleImg.load( function(){
       $scope.style.display = 'block';
       $scope.resize();
 
