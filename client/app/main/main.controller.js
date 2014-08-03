@@ -1,12 +1,14 @@
 'use strict';
 
 angular.module('doraApp')
-  .controller('MainCtrl', function ($scope, $state) {
+  .controller('MainCtrl', function ($scope, $state, ngAudio) {
 
-    var dora = $('#dora');
+    var titleImg = $('#title-img');
+    // string / image
+    var maxStringRatio = .3;
     var msgWidthRatio = .8;
     var msgHeightRatio = .25;
-    var defaultTitle = '内定取り消し';
+    var defaultTitle = 'あつい';
 
     $scope.style = {};
     $scope.msg = $state.params.msg || defaultTitle;
@@ -16,36 +18,41 @@ angular.module('doraApp')
     };
 
     $scope.resize = function(){
-      var dw = dora[0].clientWidth;
-      var dh = dora[0].clientHeight;
+      var dw = titleImg[0].clientWidth;
+      var dh = titleImg[0].clientHeight;
 
       var fontSize;
       if($scope.msg.length < 1){
         return;
       } else if($scope.msg.length == 1){
-        fontSize = dw * .4;
+        fontSize = dw * maxStringRatio;
       } else {
-        fontSize = dw * msgWidthRatio / $scope.msg.length;
+        var stringRatio = msgWidthRatio / $scope.msg.length;
+        if(stringRatio > maxStringRatio){
+          stringRatio = maxStringRatio;
+        }
+        fontSize = dw * stringRatio;
       }
 
       $scope.style.fontSize = fontSize + 'px';
       $scope.style.top = dh * msgHeightRatio - fontSize * .5 + 'px';
-      $scope.style.left = '50%';
       $scope.$apply();
     };
 
     $scope.$watch(function(){
-      return $('#msg')[0].clientWidth;
+      return $('#title-msg')[0].clientWidth;
     }, function(){
-      var msgWidth = $('#msg')[0].clientWidth;
+      var msgWidth = $('#title-msg')[0].clientWidth;
       $scope.style.marginLeft = msgWidth * -.5 + 'px';
     });
 
     $(window).resize( $scope.resize );
 
-    dora.load( function(){
+    titleImg.load( function(){
       $scope.style.display = 'block';
-      $scope.resize()
+      $scope.resize();
+
+      ngAudio.play('title-audio');
     });
 
   });

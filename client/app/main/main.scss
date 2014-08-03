@@ -33,7 +33,7 @@ body{
     background-color: #ad7546;
 }
 
-.dora{
+.title-img{
   position: relative;
   top: 0;
   bottom: 0;
@@ -43,19 +43,18 @@ body{
   min-width: 100%;
   max-width: 100%;
   min-height: auto;
-    border: 1px solid rgba(255,0,0,.0);
 }
 
-.msg{
+.title-msg{
     display: none;
     position: absolute;
-    border: 1px solid rgba(255,255,255,.0);
+    left: 50%;
     color: #fff;
     white-space: nowrap;
     input {
         background-color: #000;
         font-size: 2rem;
-        width: 200px;
+        width: 300px;
     }
 }
 .editable-click,

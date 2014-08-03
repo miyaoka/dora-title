@@ -6,7 +6,8 @@ angular.module('doraApp', [
   'ngSanitize',
   'ui.router',
   'ui.bootstrap',
-  'xeditable'
+  'xeditable',
+  'ngAudio'
 ])
   .config(function ($stateProvider, $urlRouterProvider, $locationProvider) {
     $urlRouterProvider
