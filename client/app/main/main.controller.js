@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doraApp')
-  .controller('MainCtrl', function ($scope, $state) {
+  .controller('MainCtrl', function ($scope, $state, ngAudio) {
 
     var dora = $('#dora');
     // string / image
@@ -51,7 +51,9 @@ angular.module('doraApp')
 
     dora.load( function(){
       $scope.style.display = 'block';
-      $scope.resize()
+      $scope.resize();
+
+      ngAudio.play('title-audio');
     });
 
   });
