@@ -203,7 +203,7 @@ angular.module('ngAudio', [])
 
         this.sound.volume = vol;
       } catch (e) {
-        console.warn("sound edit error.")
+//        console.warn("sound edit error.")
       }
     }
 
@@ -214,7 +214,7 @@ angular.module('ngAudio', [])
         deferredPlay = true;
         return;
       }
-      console.log("Playing", this);
+//      console.log("Playing", this);
       deferredPlay = false;
 
       if (muting) return;
@@ -246,7 +246,7 @@ angular.module('ngAudio', [])
       try {
         this.sound.currentTime = 0;
       } catch (e) {
-        console.warn("Sound error");
+//        console.warn("Sound error");
       }
     };
 
@@ -335,7 +335,7 @@ angular.module('ngAudio', [])
   this.toggleMuteAllSongs = function() {
     songmuting = !songmuting;
     var allSongs = l.getAllSongs();
-    console.log("muting all songs", allSongs);
+//    console.log("muting all songs", allSongs);
     if (songmuting) {
       _.each(allSongs, function(audObj) {
         audObj.muteSong();
