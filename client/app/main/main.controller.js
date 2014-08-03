@@ -4,9 +4,11 @@ angular.module('doraApp')
   .controller('MainCtrl', function ($scope, $state) {
 
     var dora = $('#dora');
+    // string / image
+    var maxStringRatio = .3;
     var msgWidthRatio = .8;
     var msgHeightRatio = .25;
-    var defaultTitle = '内定取り消し';
+    var defaultTitle = 'あつい';
 
     $scope.style = {};
     $scope.msg = $state.params.msg || defaultTitle;
@@ -23,14 +25,18 @@ angular.module('doraApp')
       if($scope.msg.length < 1){
         return;
       } else if($scope.msg.length == 1){
-        fontSize = dw * .4;
+        fontSize = dw * maxStringRatio;
       } else {
-        fontSize = dw * msgWidthRatio / $scope.msg.length;
+        var stringRatio = msgWidthRatio / $scope.msg.length;
+        if(stringRatio > maxStringRatio){
+          stringRatio = maxStringRatio;
+        }
+        fontSize = dw * stringRatio;
       }
 
       $scope.style.fontSize = fontSize + 'px';
+      console.log(dora);
       $scope.style.top = dh * msgHeightRatio - fontSize * .5 + 'px';
-      $scope.style.left = '50%';
       $scope.$apply();
     };
 
