@@ -16,6 +16,9 @@ angular.module('doraApp')
     $scope.msgUpdate = function(){
       $state.go('.', {msg: $scope.msg || defaultTitle});
     };
+    $scope.playAudio = function(){
+      ngAudio.play('title-audio');
+    };
 
     $scope.resize = function(){
       var dw = titleImg[0].clientWidth;
@@ -52,7 +55,7 @@ angular.module('doraApp')
       $scope.style.display = 'block';
       $scope.resize();
 
-      ngAudio.play('title-audio');
+      $scope.playAudio();
     });
 
   });
