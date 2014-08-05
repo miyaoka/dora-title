@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doraApp')
-  .controller('MainCtrl', function ($scope, $state, ngAudio) {
+  .controller('MainCtrl', function ($scope, $state, ngAudio, Speech, $timeout) {
 
     var titleImg = $('#title-img');
     // string / image
@@ -9,6 +9,9 @@ angular.module('doraApp')
     var msgWidthRatio = .8;
     var msgHeightRatio = .25;
     var defaultTitle = 'あつい';
+
+    //サウンドロゴ再生から読み上げ開始までの差(ms)
+    var SpeechDelay = 1500;
 
     $scope.style = {};
     $scope.msg = $state.params.msg || defaultTitle;
@@ -18,6 +21,10 @@ angular.module('doraApp')
     };
     $scope.playAudio = function(){
       ngAudio.play('title-audio');
+      Speech.load($scope.msg);
+      $timeout(function(){
+        Speech.resume();
+      }, SpeechDelay);
     };
 
     $scope.resize = function(){
