@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doraApp')
-  .controller('MainCtrl', function ($scope, $state, ngAudio, Speech) {
+  .controller('MainCtrl', function ($scope, $state, Speech) {
 
     var titleImg = $('#title-img');
     // string / image
@@ -13,14 +13,41 @@ angular.module('doraApp')
     //サウンドロゴ再生から読み上げ開始までの差(ms)
     var SpeechDelay = 1500;
 
+    //サウンドロゴ
+    var titleAudio = document.getElementById('title-audio');
+    //ロード完了時
+    titleAudio.addEventListener('loadeddata', function(){
+      titleAudio.play();
+      Speech.delayedResume(SpeechDelay);
+    });
+
+
     $scope.style = {};
     $scope.msg = $state.params.msg || defaultTitle;
+
+    //初回用読み上げロード（PC用。mobileがresume再生するのに合わせるため）
+    Speech.load($scope.msg);
 
     $scope.msgUpdate = function(){
       $state.go('.', {msg: $scope.msg || defaultTitle});
     };
-    $scope.playAudio = function(){
-      ngAudio.play('title-audio');
+    $scope.onClick = function(){
+      switch(titleAudio.readyState) {
+        case 0:
+          //ロードしていないならロード完了イベントで再生（mobile用）
+          titleAudio.load();
+          Speech.load($scope.msg);
+          break;
+        case 4:
+          //ロード完了済みならその場でプレイ
+          playAudio();
+          break;
+      }
+    };
+    var playAudio = function(){
+      $scope.debug = 'playaudio';
+      titleAudio.currentTime = 0;
+      titleAudio.play();
       Speech.delayedPlay($scope.msg, SpeechDelay);
     };
 
@@ -59,7 +86,7 @@ angular.module('doraApp')
       $scope.style.display = 'block';
       $scope.resize();
 
-      $scope.playAudio();
+//      $scope.playAudio();
     });
 
   });
