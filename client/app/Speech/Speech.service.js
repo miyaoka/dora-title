@@ -1,25 +1,28 @@
 'use strict';
 
 angular.module('doraApp')
-  .factory('Speech', function () {
+  .factory('Speech', function ($timeout) {
 
     var voices = window.speechSynthesis.getVoices();
-    var u = new SpeechSynthesisUtterance();
-    u.volume = 1.0; // 0 to 1
-    u.rate = .8; // .5(?) to 10
-    u.pitch = 1.4; // 0 to 2
     var Speech = {
       play: function (text, loadOnly) {
         if (!window.speechSynthesis) {
           return;
         }
         speechSynthesis.cancel();
+
+        var u = new SpeechSynthesisUtterance();
+        u.text = text;
+        u.volume = 1.0; // 0 to 1
+        u.rate = .8; // .5(?) to 10
+        u.pitch = 1.4; // 0 to 2
+
         //全てASCII文字で無ければ日本語として扱う
         if(!text.match(/^[\x20-\x7E]+$/)){
           u.lang = "ja-JP";
         }
 
-        u.text = text;
+        //loadのみなら再生開始後止める
         if(loadOnly){
           u.onstart = function(){
             speechSynthesis.pause();
@@ -31,8 +34,14 @@ angular.module('doraApp')
       load: function(text){
         this.play(text, true);
       },
-      resume: function(text){
+      resume: function(){
         speechSynthesis.resume();
+      },
+      delayedPlay: function(text, delayTime) {
+        this.load(text);
+        $timeout(function(){
+          speechSynthesis.resume();
+        }, delayTime);
       }
     };
 

@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('doraApp')
-  .controller('MainCtrl', function ($scope, $state, ngAudio, Speech, $timeout) {
+  .controller('MainCtrl', function ($scope, $state, ngAudio, Speech) {
 
     var titleImg = $('#title-img');
     // string / image
@@ -21,10 +21,7 @@ angular.module('doraApp')
     };
     $scope.playAudio = function(){
       ngAudio.play('title-audio');
-      Speech.load($scope.msg);
-      $timeout(function(){
-        Speech.resume();
-      }, SpeechDelay);
+      Speech.delayedPlay($scope.msg, SpeechDelay);
     };
 
     $scope.resize = function(){
