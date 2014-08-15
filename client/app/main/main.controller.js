@@ -8,7 +8,7 @@ angular.module('doraApp')
     var maxStringRatio = .3;
     var msgWidthRatio = .8;
     var msgHeightRatio = .25;
-    var defaultTitle = 'あつい';
+    var defaultTitle = 'クリックしてタイトルを入力';
 
     //サウンドロゴ再生から読み上げ開始までの差(ms)
     var SpeechDelay = 1500;
